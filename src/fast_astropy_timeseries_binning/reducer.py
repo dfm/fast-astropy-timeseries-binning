@@ -1,6 +1,13 @@
+import sys
+
 import numpy as np
 
 from fast_astropy_timeseries_binning import _fast_astropy_timeseries_binning
+
+
+sys_is_le = sys.byteorder == "little"
+native_code = sys_is_le and "<" or ">"
+swapped_code = sys_is_le and ">" or "<"
 
 
 class reducer:
@@ -20,11 +27,11 @@ class reducer:
     def reduceat(self, array, indices):
         if hasattr(array, "mask"):
             array = array.filled(np.nan)
-        array = array.byteswap().newbyteorder()
-        out = np.empty(indices.shape, dtype=array.dtype)
-        if array.dtype == np.float32:
-            self.func32(array, indices, out)
-        elif array.dtype == np.float64:
+        if array.dtype.name == "float32":
+            out = np.empty(indices.shape, dtype=np.float32)
+            self.func32(array.astype(np.float32), indices, out)
+        elif array.dtype.name == "float64":
+            out = np.empty(indices.shape, dtype=np.float64)
             self.func64(array, indices, out)
         else:
             raise ValueError(f"Unsupported dtype {array.dtype}")

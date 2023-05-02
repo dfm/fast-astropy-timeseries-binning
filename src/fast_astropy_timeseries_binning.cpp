@@ -54,9 +54,9 @@ struct rms {
 };
 
 template <typename T, typename F>
-void reduceat(nb::ndarray<T, nb::shape<nb::any>> array,
-              nb::ndarray<size_t, nb::shape<nb::any>> indices,
-              nb::ndarray<T, nb::shape<nb::any>> out) {
+void reduceat(nb::ndarray<T, nb::shape<nb::any>, nb::c_contig> array,
+              nb::ndarray<size_t, nb::shape<nb::any>, nb::c_contig> indices,
+              nb::ndarray<T, nb::shape<nb::any>, nb::c_contig> out) {
   for (size_t n = 0; n < indices.shape(0); ++n) {
     size_t top =
         (n < indices.shape(0) - 1) ? indices(n + 1) : array.shape(0) - 1;
