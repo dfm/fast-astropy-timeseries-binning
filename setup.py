@@ -21,7 +21,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/dfm/fast-astropy-timeseries-binning",
     python_requires=">=3.8",
-    license="BSD",
+    license="Apache",
     packages=["fast_astropy_timeseries_binning"],
     package_dir={"": "src"},
     cmake_install_dir="src/fast_astropy_timeseries_binning",
